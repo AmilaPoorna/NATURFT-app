@@ -37,6 +37,7 @@ lab_dip_encoder = joblib.load('lab_dip_encoder.pkl')
 machine_code_encoder = joblib.load('machine_code_encoder.pkl')
 nylon_type_encoder = joblib.load("nylon_type_encoder.pkl")
 scaler = joblib.load('scaler.pkl')
+X_train_columns = joblib.load("X_train.pkl")
 
 st.title('Nylon Dyeing Recipe Status Predictor')
 
@@ -83,6 +84,8 @@ if st.button('Predict Status'):
     rft_data['Colour'] = colour_encoder.transform(rft_data['Colour'])
     rft_data['MachineCode'] = machine_code_encoder.transform(rft_data['MachineCode'])
     rft_data['RecipeQty'] = scaler.transform(rft_data[['RecipeQty']])
+
+    rft_data = rft_data[X_train_columns]
     
     prediction_class = classification_model.predict(rft_data)
     st.session_state.prediction_class = prediction_class[0]
