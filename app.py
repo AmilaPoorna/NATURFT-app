@@ -37,6 +37,7 @@ lab_dip_encoder = joblib.load('lab_dip_encoder.pkl')
 machine_code_encoder = joblib.load('machine_code_encoder.pkl')
 nylon_type_encoder = joblib.load("nylon_type_encoder.pkl")
 scaler = joblib.load('scaler.pkl')
+X_train = joblib.load("X_train.pkl")
 
 st.title('Nylon Dyeing Recipe Status Predictor')
 
