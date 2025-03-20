@@ -83,6 +83,8 @@ if st.button('Predict Status'):
     rft_data['DyeingMethod'] = dyeing_method_encoder.transform(rft_data['DyeingMethod'])
     rft_data['Colour'] = colour_encoder.transform(rft_data['Colour'])
     rft_data['MachineCode'] = machine_code_encoder.transform(rft_data['MachineCode'])
+
+    rft_data = rft_data[X_train]
     
     prediction_class = classification_model.predict(input_data)
     st.session_state.prediction_class = prediction_class[0]
