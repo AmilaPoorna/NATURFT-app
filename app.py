@@ -73,7 +73,7 @@ if st.button('Predict Status'):
     
     rft_data = pd.DataFrame(input_data, index=[0])
 
-    rft_data['ColourShade'] = colour_shade_encoder.transform(rft_data['Denier'])
+    rft_data['ColourShade'] = colour_shade_encoder.transform(rft_data['ColourShade'])
     rft_data['IsFirstColour'] = first_colour_encoder.transform(rft_data['IsFirstColour'])
     rft_data['ColourDescription'] = colour_description_encoder.transform(rft_data['ColourDescription'])
     rft_data['IsLabDip'] = lab_dip_encoder.transform(rft_data['IsLabDip'])
