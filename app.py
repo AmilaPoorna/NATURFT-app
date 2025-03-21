@@ -40,7 +40,7 @@ scaler = joblib.load('scaler.pkl')
 X_train_columns = joblib.load("X_train.pkl")
 
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Predictor", "Dashboard", "AI Assistant"])
+page = st.sidebar.selectbox("Select a section", ["Predictor", "Dashboard", "AI Assistant"])
 
 if page == "Predictor":
     st.title('Nylon Dyeing Recipe Status Predictor')
