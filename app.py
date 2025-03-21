@@ -111,16 +111,12 @@ def ai_assistant_page():
     st.title("AI Assistant")
     st.write("This is where the AI assistant content will go.")
 
-# Create a navigation menu
-pages = {
-    "Predictor": predictor_page,
-    "Dashboard": dashboard_page,
-    "AI Assistant": ai_assistant_page
-}
-
-# Add a selectbox for navigation
-st.sidebar.title("Navigation")
-page = st.sidebar.selectbox("Choose a page", list(pages.keys()))
-
-# Display the selected page
-pages[page]()
+# Create a navigation menu with buttons
+if st.sidebar.button("Predictor"):
+    predictor_page()
+elif st.sidebar.button("Dashboard"):
+    dashboard_page()
+elif st.sidebar.button("AI Assistant"):
+    ai_assistant_page()
+else:
+    predictor_page()  # Default to Predictor page if none is selected
