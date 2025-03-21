@@ -41,7 +41,6 @@ X_train_columns = joblib.load("X_train.pkl")
 def reset_prediction():
     st.session_state.prediction_class = None
 
-# Define predictor page
 def predictor_page():
     set_background("background.jpg")
     st.title('Nylon Dyeing Recipe Status Predictor')
@@ -100,18 +99,16 @@ def predictor_page():
 
         st.write(f"Prediction: {prediction_label}")
 
-
-# Define dashboard page
 def dashboard_page():
     st.title("Dashboard")
     st.write("This is where the dashboard content will go.")
 
-# Define AI assistant page
 def ai_assistant_page():
     st.title("AI Assistant")
     st.write("This is where the AI assistant content will go.")
 
-# Create a navigation menu with buttons
+st.sidebar.markdown("# Navigation")
+
 if st.sidebar.button("Predictor"):
     predictor_page()
 elif st.sidebar.button("Dashboard"):
@@ -119,4 +116,4 @@ elif st.sidebar.button("Dashboard"):
 elif st.sidebar.button("AI Assistant"):
     ai_assistant_page()
 else:
-    predictor_page()  # Default to Predictor page if none is selected
+    predictor_page()
