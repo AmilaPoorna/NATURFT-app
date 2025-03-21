@@ -47,7 +47,7 @@ if st.sidebar.button("Dashboard"):
 if st.sidebar.button("AI Assistant"):
     st.session_state.current_page = "AI Assistant"
 
-if page == "Predictor":
+if st.session_state.current_page == "Predictor":
     st.title('Nylon Dyeing Recipe Status Predictor')
     
     def reset_prediction():
@@ -103,10 +103,10 @@ if page == "Predictor":
     if st.session_state.prediction_class is not None:
         st.write(f"Prediction: {'RFT' if st.session_state.prediction_class == 1 else 'WFT. Please proceed with necessary steps.'}")
 
-elif page == "Dashboard":
+elif st.session_state.current_page == "Dashboard":
     st.title("Nylon Yarn Dashboard")
     st.write("xxx")
 
-elif page == "AI Assistant":
+elif st.session_state.current_page == "AI Assistant":
     st.title("AI Assistant")
     st.write("xxx")
