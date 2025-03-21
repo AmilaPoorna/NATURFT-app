@@ -49,7 +49,7 @@ colour_shade = st.selectbox('Select the Colour Shade:', ['Very Light', 'Light', 
 first_colour = st.radio('Is the Color Being Created for the First Time in the Dye Lab?', ['Yes', 'No'], key="first_colour", on_change=reset_prediction)
 colour_description = st.selectbox('Select the Colour Description:', ['Normal', 'Softner', 'Special Colour'], key="colour_description", on_change=reset_prediction)
 lab_dip = st.radio('Is the Swatch Being Created in the Dye Lab?', ['Yes', 'No'], key="lab_dip", on_change=reset_prediction)
-nylon_type = st.selectbox('Select the Nylon Type:', ['Stretch Nylon', 'Micro Fiber Streatch Nylon', 'Other'], key="nylon_type", on_change=reset_prediction)
+nylon_type = st.selectbox('Select the Nylon Type:', ['Stretch Nylon', 'Micro Fiber Streach Nylon', 'Other'], key="nylon_type", on_change=reset_prediction)
 denier = st.selectbox('Select the Denier Count:', [44, 70, 78, 100], key="denier", on_change=reset_prediction)
 dyeing_method = st.selectbox('Select the Dyeing Method:', ['Bullet', 'Hank', 'Package'], key="dyeing_method", on_change=reset_prediction)
 colour = st.selectbox('Select the Colour:', ['Black', 'White', 'Grey', 'Blue', 'Navy Blue', 'Green', 'Pink', 'Red', 'Orange', 'Yellow', 'Beige', 'Brown', 'Purple', 'Cream', 'Lylac', 'Other'], key="colour", on_change=reset_prediction)
