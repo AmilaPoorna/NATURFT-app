@@ -39,6 +39,9 @@ nylon_type_encoder = joblib.load("nylon_type_encoder.pkl")
 scaler = joblib.load('scaler.pkl')
 X_train_columns = joblib.load("X_train.pkl")
 
+if 'current_page' not in st.session_state:
+    st.session_state.current_page = "Predictor"
+
 st.sidebar.title("Navigation")
 if st.sidebar.button("Predictor"):
     st.session_state.current_page = "Predictor"
