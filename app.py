@@ -26,7 +26,6 @@ def set_background(image_path):
 
 set_background("background.jpg")
 
-# Load Models and Encoders
 classification_model = joblib.load('classification_model.pkl')
 colour_description_encoder = joblib.load('colour_description_encoder.pkl')
 colour_encoder = joblib.load('colour_encoder.pkl')
@@ -41,7 +40,7 @@ scaler = joblib.load('scaler.pkl')
 X_train_columns = joblib.load("X_train.pkl")
 
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Predictor", "Dashboard", "GPT Assistant"])
+page = st.sidebar.radio("Go to", ["Predictor", "Dashboard", "AI Assistant"])
 
 if page == "Predictor":
     st.title('Nylon Dyeing Recipe Status Predictor')
@@ -77,7 +76,8 @@ if page == "Predictor":
             'MachineCode': [machine_code]
         })
         
-        rft_data = input_data.copy()
+        rft_data = pd.DataFrame(input_data, index=[0])
+        
         rft_data['ColourShade'] = colour_shade_encoder.transform(rft_data['ColourShade'])
         rft_data['IsFirstColour'] = first_colour_encoder.transform(rft_data['IsFirstColour'])
         rft_data['ColourDescription'] = colour_description_encoder.transform(rft_data['ColourDescription'])
@@ -87,7 +87,9 @@ if page == "Predictor":
         rft_data['DyeingMethod'] = dyeing_method_encoder.transform(rft_data['DyeingMethod'])
         rft_data['Colour'] = colour_encoder.transform(rft_data['Colour'])
         rft_data['MachineCode'] = machine_code_encoder.transform(rft_data['MachineCode'])
+        
         rft_data['RecipeQty'] = scaler.transform(rft_data[['RecipeQty']])
+        
         rft_data = rft_data[X_train_columns]
         
         prediction_class = classification_model.predict(rft_data)
@@ -97,9 +99,9 @@ if page == "Predictor":
         st.write(f"Prediction: {'RFT' if st.session_state.prediction_class == 1 else 'WFT. Please proceed with necessary steps.'}")
 
 elif page == "Dashboard":
-    st.title("Dashboard - Data Insights")
-    st.write("This section will contain visualizations and analytics.")
+    st.title("Nylon Yarn Dashboard")
+    st.write("xxx")
 
-elif page == "GPT Assistant":
-    st.title("GPT Assistant")
-    st.write("Ask questions and get AI-generated insights.")
+elif page == "AI Assistant":
+    st.title("AI Assistant")
+    st.write("xxx")
