@@ -4,10 +4,6 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 import base64
-import openai
-
-# Set up the OpenAI API key using Streamlit secrets
-openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 def get_base64_image(image_path):
     with open(image_path, "rb") as image_file:
@@ -101,23 +97,3 @@ if st.session_state.prediction_class is not None:
         prediction_label = "WFT. Please proceed with necessary steps."
     
     st.write(f"Prediction: {prediction_label}")
-
-# AI Assistant Page
-st.sidebar.title("AI Assistant")
-selected_page = st.sidebar.radio("Choose Page", ["Nylon Dyeing Recipe Status Predictor", "AI Assistant"])
-
-if selected_page == "AI Assistant":
-    st.title("AI Assistant")
-    user_input = st.text_input("Ask me anything about nylon dyeing or recipes:", "")
-
-    if user_input:
-        try:
-            response = openai.Completion.create(
-                model="gpt-3.5-turbo",  # Change this to gpt-3.5-turbo or gpt-4
-                messages=[{"role": "user", "content": user_input}],
-                max_tokens=150
-            )
-            answer = response['choices'][0]['message']['content'].strip()
-            st.write(f"AI Assistant: {answer}")
-        except Exception as e:
-            st.error(f"Error: {str(e)}")
