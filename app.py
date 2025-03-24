@@ -126,7 +126,7 @@ elif page == "AI Assistant":
     # Text input for the user to enter a new query
     user_query = st.text_input("Ask anything", "")
 
-    if st.button("Submit Query") and user_query:
+    if user_query and st.button("Submit Query"):
         try:
             # Add user query to conversation history
             st.session_state.conversation.append({"role": "user", "content": user_query})
