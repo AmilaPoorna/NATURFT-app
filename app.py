@@ -138,10 +138,10 @@ elif page == "AI Assistant":
             # Add AI response to session after it's generated
             st.session_state.messages.append({"role": "assistant", "content": ai_response})
 
-            # Re-run to ensure new messages are displayed correctly after AI response
-            st.experimental_rerun()
+            # Do not use rerun; simply let Streamlit update the interface after the change.
+            # This will trigger a UI update, and new messages will be displayed automatically.
+            # No need to call st.experimental_rerun()
 
         except Exception as e:
             ai_response = f"Error occurred: {str(e)}"
             st.session_state.messages.append({"role": "assistant", "content": ai_response})
-            st.experimental_rerun()
