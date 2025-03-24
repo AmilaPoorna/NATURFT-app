@@ -113,7 +113,7 @@ if selected_page == "AI Assistant":
     if user_input:
         try:
             response = openai.Completion.create(
-                model="gpt-4",  # Change this to gpt-3.5-turbo or gpt-4
+                model="gpt-3.5-turbo",  # Change this to gpt-3.5-turbo or gpt-4
                 messages=[{"role": "user", "content": user_input}],
                 max_tokens=150
             )
