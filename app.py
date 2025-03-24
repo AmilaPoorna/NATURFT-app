@@ -39,7 +39,8 @@ nylon_type_encoder = joblib.load("nylon_type_encoder.pkl")
 scaler = joblib.load('scaler.pkl')
 X_train_columns = joblib.load("X_train.pkl")
 
-page = st.sidebar.radio("#Navigator", ["Nylon Dyeing Recipe Status Predictor", "AI Assistant"])
+st.sidebar.title("Navigator")
+page = st.sidebar.radio("Select a Page", ["Nylon Dyeing Recipe Status Predictor", "AI Assistant"])
 
 if page == "Nylon Dyeing Recipe Status Predictor":
     st.title('Nylon Dyeing Recipe Status Predictor')
