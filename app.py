@@ -106,23 +106,6 @@ if page == "Nylon Dyeing Recipe Status Predictor":
             prediction_label = "WFT. Please proceed with necessary steps."
 
         st.write(f"Prediction: {prediction_label}")
-
-elif page == "AI Assistant":
-    st.title('AI Assistant')
-
-    st.write("What can I help you with?")
-    
-    user_query = st.text_input("Ask anything", "")
-
-    if user_query:
-        try:
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=user_query,
-            )
-            st.write(f"{response.text}")
-        except Exception as e:
-            st.write(f"Error occurred: {str(e)}")
             
 elif page == "AI Assistant":
     st.title('AI Assistant')
