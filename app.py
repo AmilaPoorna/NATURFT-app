@@ -116,16 +116,18 @@ elif page == "AI Assistant":
 
     # Display chat history before user input
     for message in st.session_state.messages:
-        if message['role'] == 'user':
-            st.write(f"**You:** {message['content']}")
-        else:
-            st.write(f"**AI Assistant:** {message['content']}")
+        with st.chat_message(message["role"]):
+            st.write(message["content"])
 
-    user_query = st.text_input("Ask anything", "")
+    # Use chat_input instead of text_input for better handling
+    user_query = st.chat_input("Ask anything...")
 
     if user_query:
-        # Add user message to session before processing the response
+        # Add user's message to session state and immediately display it
         st.session_state.messages.append({"role": "user", "content": user_query})
+
+        with st.chat_message("user"):
+            st.write(user_query)
 
         try:
             # Generate AI response using the model
@@ -135,12 +137,11 @@ elif page == "AI Assistant":
             )
             ai_response = response.text
 
-            # Add AI response to session after it's generated
-            st.session_state.messages.append({"role": "assistant", "content": ai_response})
-
-            # After appending both the user and assistant messages, we do not need st.experimental_rerun() anymore.
-            # Streamlit will automatically refresh the app with updated session state and display both messages.
-
         except Exception as e:
             ai_response = f"Error occurred: {str(e)}"
-            st.session_state.messages.append({"role": "assistant", "content": ai_response})
+
+        # Add AI response to session state and immediately display it
+        st.session_state.messages.append({"role": "assistant", "content": ai_response})
+
+        with st.chat_message("assistant"):
+            st.write(ai_response)
