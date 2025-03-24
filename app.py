@@ -24,10 +24,8 @@ def set_background(image_path):
     """
     st.markdown(page_bg_img, unsafe_allow_html=True)
 
-# Set background image
 set_background("background.jpg")
 
-# Load models and encoders
 classification_model = joblib.load('classification_model.pkl')
 colour_description_encoder = joblib.load('colour_description_encoder.pkl')
 colour_encoder = joblib.load('colour_encoder.pkl')
@@ -41,17 +39,14 @@ nylon_type_encoder = joblib.load("nylon_type_encoder.pkl")
 scaler = joblib.load('scaler.pkl')
 X_train_columns = joblib.load("X_train.pkl")
 
-# Sidebar navigation using radio button selector
-page = st.sidebar.radio("Select a Page", ["Nylon Dyeing Recipe Status Predictor", "AI Assistant"])
+page = st.sidebar.radio("#Navigator", ["Nylon Dyeing Recipe Status Predictor", "AI Assistant"])
 
 if page == "Nylon Dyeing Recipe Status Predictor":
-    # Header for the Nylon Dyeing Recipe Status Predictor page
     st.title('Nylon Dyeing Recipe Status Predictor')
 
     def reset_prediction():
         st.session_state.prediction_class = None
 
-    # Input fields for the "Nylon Dyeing Recipe Status Predictor"
     recipe_quantity = st.number_input('Enter Recipe Quantity (kg):', min_value=0.001, step=0.001, format="%.3f", key="recipe_quantity", on_change=reset_prediction)
     colour_shade = st.selectbox('Select the Colour Shade:', ['Very Light', 'Light', 'Medium', 'Dark', 'Very Dark'], key="colour_shade", on_change=reset_prediction)
     first_colour = st.radio('Is the Color Being Created for the First Time in the Dye Lab?', ['Yes', 'No'], key="first_colour", on_change=reset_prediction)
@@ -107,15 +102,8 @@ if page == "Nylon Dyeing Recipe Status Predictor":
         st.write(f"Prediction: {prediction_label}")
 
 elif page == "AI Assistant":
-    # Header for the AI Assistant page
     st.title('AI Assistant')
 
-    # Content for the "AI Assistant"
-    st.write("Welcome to the AI Assistant! Here you can interact with the system and ask questions about nylon dyeing recipes or anything related to your workflow.")
+    st.write("Welcome to the AI Assistant! Here you can ask questions about anything related to nylon dyeing and more.")
     
     user_query = st.text_input("Ask the AI Assistant:", "")
-    
-    if user_query:
-        # For demonstration, we'll use a simple response mechanism.
-        # In a real-world scenario, you might integrate with an NLP model or similar.
-        st.write(f"AI Assistant says: You asked: '{user_query}'. Let me assist you with that!")
