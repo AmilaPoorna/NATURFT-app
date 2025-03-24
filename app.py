@@ -123,3 +123,33 @@ elif page == "AI Assistant":
             st.write(f"{response.text}")
         except Exception as e:
             st.write(f"Error occurred: {str(e)}")
+            
+elif page == "AI Assistant":
+    st.title('AI Assistant')
+
+    st.write("What can I help you with?")
+
+    if 'conversation' not in st.session_state:
+        st.session_state.conversation = []
+
+    user_query = st.text_input("Ask anything", "")
+
+    if st.button("Submit Query") and user_query:
+        try:
+            st.session_state.conversation.append({"role": "user", "content": user_query})
+
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=user_query,
+            )
+
+            st.session_state.conversation.append({"role": "assistant", "content": response.text})
+
+        except Exception as e:
+            st.write(f"Error occurred: {str(e)}")
+
+    for message in st.session_state.conversation:
+        if message["role"] == "user":
+            st.write(f"**You**: {message['content']}")
+        else:
+            st.write(f"**AI Assistant**: {message['content']}")
