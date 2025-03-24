@@ -110,6 +110,7 @@ if page == "Nylon Dyeing Recipe Status Predictor":
 elif page == "AI Assistant":
     st.title('AI Assistant')
 
+    # Initialize the chat history if not already in session
     if 'messages' not in st.session_state:
         st.session_state.messages = []
 
@@ -123,17 +124,24 @@ elif page == "AI Assistant":
     user_query = st.text_input("Ask anything", "")
 
     if user_query:
-        # Add user message to session
+        # Add user message to session before processing the response
         st.session_state.messages.append({"role": "user", "content": user_query})
 
         try:
+            # Generate AI response using the model
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 contents=user_query,
             )
             ai_response = response.text
-            # Add AI response to session
+
+            # Add AI response to session after it's generated
             st.session_state.messages.append({"role": "assistant", "content": ai_response})
+
+            # Re-run to ensure new messages are displayed correctly after AI response
+            st.experimental_rerun()
+
         except Exception as e:
             ai_response = f"Error occurred: {str(e)}"
             st.session_state.messages.append({"role": "assistant", "content": ai_response})
+            st.experimental_rerun()
