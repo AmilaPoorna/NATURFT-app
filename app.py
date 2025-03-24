@@ -110,9 +110,9 @@ if page == "Nylon Dyeing Recipe Status Predictor":
 elif page == "AI Assistant":
     st.title('AI Assistant')
 
-    st.write("Welcome to the AI Assistant! Here you can ask questions about anything related to nylon dyeing and more.")
+    st.write("What can I help you with?")
     
-    user_query = st.text_input("Ask the AI Assistant:", "")
+    user_query = st.text_input("Ask anything", "")
 
     if user_query:
         try:
@@ -120,6 +120,6 @@ elif page == "AI Assistant":
                 model="gemini-2.0-flash",
                 contents=user_query,
             )
-            st.write(f"AI Assistant says: {response.text}")
+            st.write(f"{response.text}")
         except Exception as e:
             st.write(f"Error occurred: {str(e)}")
