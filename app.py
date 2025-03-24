@@ -116,39 +116,28 @@ elif page == "AI Assistant":
     if 'conversation' not in st.session_state:
         st.session_state.conversation = []
 
-    # Placeholder for conversation history
-    conversation_placeholder = st.empty()
+    user_query = st.text_input("Ask anything", "")
 
-    # Text input field for continuous prompt entry (hit enter to submit)
-    user_query = st.text_area("Ask anything", "", height=100, key="user_query", on_change=None)
-
-    # Check if the user has entered something and hit Enter (text_area has 'on_change')
-    if user_query and user_query != st.session_state.get('last_user_query', ''):
-        # Add the user query to the conversation history
-        st.session_state.conversation.append({"role": "user", "content": user_query})
-
+    if st.button("Submit Query") and user_query:
         try:
-            # Generate response from the model
+            # Add user query to conversation history
+            st.session_state.conversation.append({"role": "user", "content": user_query})
+
+            # Generate response using the API
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 contents=user_query,
             )
 
-            # Add assistant response to the conversation history
+            # Add AI response to conversation history
             st.session_state.conversation.append({"role": "assistant", "content": response.text})
-
-            # Store the last user query in session to prevent re-triggering the same input
-            st.session_state.last_user_query = user_query
-
-            # Clear the input field by resetting it in the session state
-            st.session_state.user_query = ""  # reset the input field in session state
 
         except Exception as e:
             st.write(f"Error occurred: {str(e)}")
 
-    # Display the entire conversation in real-time
+    # Display conversation history
     for message in st.session_state.conversation:
         if message["role"] == "user":
-            conversation_placeholder.write(f"**You**: {message['content']}")
+            st.write(f"**You**: {message['content']}")
         else:
-            conversation_placeholder.write(f"**AI Assistant**: {message['content']}")
+            st.write(f"**AI Assistant**: {message['content']}")
