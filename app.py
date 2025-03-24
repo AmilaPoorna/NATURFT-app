@@ -141,7 +141,8 @@ elif page == "AI Assistant":
             # Add AI response to conversation history
             st.session_state.conversation.append({"role": "assistant", "content": response.text})
 
-            # Clear the input field after submitting
-            st.experimental_rerun()  # This will trigger a page rerun to display new content
+            # Rerun to display new content immediately
+            st.rerun()
         except Exception as e:
             st.write(f"Error occurred: {str(e)}")
+
