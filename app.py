@@ -109,33 +109,27 @@ if page == "Nylon Dyeing Recipe Status Predictor":
 elif page == "AI Assistant":
     st.title('AI Assistant')
 
-    # Initialize chat history and input state if not in session state
-    if 'messages' not in st.session_state:
+    # Initialize chat history if not in session state
+    if "messages" not in st.session_state:
         st.session_state.messages = []
-    
-    if 'current_input' not in st.session_state:
-        st.session_state.current_input = ""
 
     # Display chat history
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.write(message["content"])
 
-    # Use chat_input without 'value' parameter
+    # Capture new user input (without pre-filling)
     user_query = st.chat_input("Ask anything...")
 
     if user_query:
-        # Save the input in session state
-        st.session_state.current_input = user_query
-
-        # Add user's message to session state and display it
+        # Store user message
         st.session_state.messages.append({"role": "user", "content": user_query})
 
         with st.chat_message("user"):
             st.write(user_query)
 
         try:
-            # Generate AI response using the model
+            # Generate AI response
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 contents=user_query,
@@ -145,11 +139,8 @@ elif page == "AI Assistant":
         except Exception as e:
             ai_response = f"Error occurred: {str(e)}"
 
-        # Add AI response to session state and display it
+        # Store AI response
         st.session_state.messages.append({"role": "assistant", "content": ai_response})
 
         with st.chat_message("assistant"):
             st.write(ai_response)
-
-        # Clear the stored input after submission
-        st.session_state.current_input = ""
