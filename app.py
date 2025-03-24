@@ -112,25 +112,20 @@ elif page == "AI Assistant":
 
     st.write("What can I help you with?")
 
-    # Ensure the page stays on 'AI Assistant'
-    if 'current_page' not in st.session_state:
-        st.session_state.current_page = "AI Assistant"
-
-    # Initialize conversation history if not already in session state
+    # Session state to store conversation history
     if 'conversation' not in st.session_state:
         st.session_state.conversation = []
 
-    # Display conversation history first
+    # Display conversation history
     for message in st.session_state.conversation:
         if message["role"] == "user":
             st.write(f"**You**: {message['content']}")
         else:
             st.write(f"**AI Assistant**: {message['content']}")
 
-    # Text input for the user to enter a new query
+    # Prompt for new query
     user_query = st.text_input("Ask anything", "")
 
-    # Submit query only when button is clicked
     if st.button("Submit Query") and user_query:
         try:
             # Add user query to conversation history
@@ -145,10 +140,5 @@ elif page == "AI Assistant":
             # Add AI response to conversation history
             st.session_state.conversation.append({"role": "assistant", "content": response.text})
 
-            # Set current page back to 'AI Assistant'
-            st.session_state.current_page = "AI Assistant"
-
-            # Rerun to display new content immediately
-            st.rerun()  # Refresh the page to show updated content
         except Exception as e:
             st.write(f"Error occurred: {str(e)}")
