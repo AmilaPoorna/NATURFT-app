@@ -6,7 +6,6 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 import base64
 from google import genai
 
-# Access API key from Streamlit secrets
 api_key = st.secrets["genai"]["api_key"]
 client = genai.Client(api_key=api_key)
 
@@ -110,27 +109,27 @@ if page == "Nylon Dyeing Recipe Status Predictor":
 elif page == "AI Assistant":
     st.title('AI Assistant')
 
-    # Initialize the chat history if not already in session
     if 'messages' not in st.session_state:
         st.session_state.messages = []
+    
+    if 'current_input' not in st.session_state:
+        st.session_state.current_input = ""
 
-    # Display chat history before user input
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.write(message["content"])
 
-    # Use chat_input instead of text_input for better handling
-    user_query = st.chat_input("Ask anything...")
+    user_query = st.chat_input("Ask anything...", value=st.session_state.current_input)
 
     if user_query:
-        # Add user's message to session state and immediately display it
+        st.session_state.current_input = ""
+
         st.session_state.messages.append({"role": "user", "content": user_query})
 
         with st.chat_message("user"):
             st.write(user_query)
 
         try:
-            # Generate AI response using the model
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 contents=user_query,
@@ -140,8 +139,10 @@ elif page == "AI Assistant":
         except Exception as e:
             ai_response = f"Error occurred: {str(e)}"
 
-        # Add AI response to session state and immediately display it
         st.session_state.messages.append({"role": "assistant", "content": ai_response})
 
         with st.chat_message("assistant"):
             st.write(ai_response)
+
+    else:
+        st.session_state.current_input = user_query
