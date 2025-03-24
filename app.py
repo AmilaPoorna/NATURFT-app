@@ -106,39 +106,20 @@ if page == "Nylon Dyeing Recipe Status Predictor":
             prediction_label = "WFT. Please proceed with necessary steps."
 
         st.write(f"Prediction: {prediction_label}")
-            
+
 elif page == "AI Assistant":
     st.title('AI Assistant')
 
     st.write("What can I help you with?")
-
-    # Session state to store conversation history
-    if 'conversation' not in st.session_state:
-        st.session_state.conversation = []
-
-    # Display conversation history
-    for message in st.session_state.conversation:
-        if message["role"] == "user":
-            st.write(f"**You**: {message['content']}")
-        else:
-            st.write(f"**AI Assistant**: {message['content']}")
-
-    # Prompt for new query
+    
     user_query = st.text_input("Ask anything", "")
 
-    if st.button("Submit Query") and user_query:
+    if user_query:
         try:
-            # Add user query to conversation history
-            st.session_state.conversation.append({"role": "user", "content": user_query})
-
-            # Generate response using the API
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 contents=user_query,
             )
-
-            # Add AI response to conversation history
-            st.session_state.conversation.append({"role": "assistant", "content": response.text})
-
+            st.write(f"{response.text}")
         except Exception as e:
             st.write(f"Error occurred: {str(e)}")
