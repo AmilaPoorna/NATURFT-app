@@ -114,7 +114,7 @@ elif page == "AI Assistant":
     if 'messages' not in st.session_state:
         st.session_state.messages = []
 
-    # Display chat history
+    # Display chat history before user input
     for message in st.session_state.messages:
         if message['role'] == 'user':
             st.write(f"**You:** {message['content']}")
@@ -138,9 +138,8 @@ elif page == "AI Assistant":
             # Add AI response to session after it's generated
             st.session_state.messages.append({"role": "assistant", "content": ai_response})
 
-            # Do not use rerun; simply let Streamlit update the interface after the change.
-            # This will trigger a UI update, and new messages will be displayed automatically.
-            # No need to call st.experimental_rerun()
+            # After appending both the user and assistant messages, we do not need st.experimental_rerun() anymore.
+            # Streamlit will automatically refresh the app with updated session state and display both messages.
 
         except Exception as e:
             ai_response = f"Error occurred: {str(e)}"
