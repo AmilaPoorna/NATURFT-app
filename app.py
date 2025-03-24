@@ -113,11 +113,11 @@ if selected_page == "AI Assistant":
     if user_input:
         try:
             response = openai.Completion.create(
-                engine="text-davinci-003",
-                prompt=user_input,
+                model="gpt-4",  # Change this to gpt-3.5-turbo or gpt-4
+                messages=[{"role": "user", "content": user_input}],
                 max_tokens=150
             )
-            answer = response.choices[0].text.strip()
+            answer = response['choices'][0]['message']['content'].strip()
             st.write(f"AI Assistant: {answer}")
         except Exception as e:
             st.error(f"Error: {str(e)}")
