@@ -116,14 +116,14 @@ elif page == "AI Assistant":
     if 'conversation' not in st.session_state:
         st.session_state.conversation = []
 
-    # Create a placeholder to display conversation
+    # Placeholder for conversation history
     conversation_placeholder = st.empty()
 
-    # Text input for continuous prompt entry (hit enter to submit)
-    user_query = st.text_area("Ask anything", "", height=100, key="user_query")
+    # Text input field for continuous prompt entry (hit enter to submit)
+    user_query = st.text_area("Ask anything", "", height=100, key="user_query", on_change=None)
 
     # Check if the user has entered something and hit Enter (text_area has 'on_change')
-    if user_query:
+    if user_query and user_query != st.session_state.get('last_user_query', ''):
         # Add the user query to the conversation history
         st.session_state.conversation.append({"role": "user", "content": user_query})
 
@@ -137,7 +137,10 @@ elif page == "AI Assistant":
             # Add assistant response to the conversation history
             st.session_state.conversation.append({"role": "assistant", "content": response.text})
 
-            # Reset the input field (effectively like pressing Enter)
+            # Store the last user query in session to prevent re-triggering the same input
+            st.session_state.last_user_query = user_query
+
+            # Clear the input field by resetting it in the session state
             st.session_state.user_query = ""  # reset the input field in session state
 
         except Exception as e:
