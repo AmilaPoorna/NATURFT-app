@@ -116,6 +116,14 @@ elif page == "AI Assistant":
     if 'conversation' not in st.session_state:
         st.session_state.conversation = []
 
+    # Display conversation history first
+    for message in st.session_state.conversation:
+        if message["role"] == "user":
+            st.write(f"**You**: {message['content']}")
+        else:
+            st.write(f"**AI Assistant**: {message['content']}")
+
+    # Text input for the user to enter a new query
     user_query = st.text_input("Ask anything", "")
 
     if st.button("Submit Query") and user_query:
@@ -134,10 +142,3 @@ elif page == "AI Assistant":
 
         except Exception as e:
             st.write(f"Error occurred: {str(e)}")
-
-    # Display conversation history
-    for message in st.session_state.conversation:
-        if message["role"] == "user":
-            st.write(f"**You**: {message['content']}")
-        else:
-            st.write(f"**AI Assistant**: {message['content']}")
