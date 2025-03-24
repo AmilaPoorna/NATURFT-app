@@ -6,13 +6,14 @@ st.set_page_config(
     layout="wide"
 )
 
+# Sidebar navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.selectbox("Choose a Page", ["🏠 Home", "🤖 AI Assistant"])
+page = st.sidebar.radio("Go to", ["🏠 Home", "🤖 AI Assistant"])
 
+# Ensure only one page loads at a time
 if page == "🏠 Home":
-    import home
+    st.session_state.current_page = "home"
+    from home import *
 elif page == "🤖 AI Assistant":
-    import AI_assistant
-
-st.write("### Welcome to the Nylon Dyeing Recipe Status Predictor!")
-st.write("Use the sidebar to navigate between pages.")
+    st.session_state.current_page = "ai_assistant"
+    from AI_assistant import *
