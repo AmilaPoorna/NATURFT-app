@@ -4,6 +4,11 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 import base64
+from google import genai
+
+# Access API key from Streamlit secrets
+api_key = st.secrets["genai"]["api_key"]
+client = genai.Client(api_key=api_key)
 
 def get_base64_image(image_path):
     with open(image_path, "rb") as image_file:
@@ -108,3 +113,13 @@ elif page == "AI Assistant":
     st.write("Welcome to the AI Assistant! Here you can ask questions about anything related to nylon dyeing and more.")
     
     user_query = st.text_input("Ask the AI Assistant:", "")
+
+    if user_query:
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=user_query,
+            )
+            st.write(f"AI Assistant says: {response.text}")
+        except Exception as e:
+            st.write(f"Error occurred: {str(e)}")
