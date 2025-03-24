@@ -110,16 +110,30 @@ if page == "Nylon Dyeing Recipe Status Predictor":
 elif page == "AI Assistant":
     st.title('AI Assistant')
 
-    st.write("What can I help you with?")
-    
+    if 'messages' not in st.session_state:
+        st.session_state.messages = []
+
+    # Display chat history
+    for message in st.session_state.messages:
+        if message['role'] == 'user':
+            st.write(f"**You:** {message['content']}")
+        else:
+            st.write(f"**AI Assistant:** {message['content']}")
+
     user_query = st.text_input("Ask anything", "")
 
     if user_query:
+        # Add user message to session
+        st.session_state.messages.append({"role": "user", "content": user_query})
+
         try:
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 contents=user_query,
             )
-            st.write(f"{response.text}")
+            ai_response = response.text
+            # Add AI response to session
+            st.session_state.messages.append({"role": "assistant", "content": ai_response})
         except Exception as e:
-            st.write(f"Error occurred: {str(e)}")
+            ai_response = f"Error occurred: {str(e)}"
+            st.session_state.messages.append({"role": "assistant", "content": ai_response})
