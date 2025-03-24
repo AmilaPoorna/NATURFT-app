@@ -5,10 +5,9 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 import base64
 import openai
-import os
 
-# Set up the OpenAI API key
-openai.api_key = os.getenv("OPENAI_RFT_KEY")
+# Set up the OpenAI API key using Streamlit secrets
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 def get_base64_image(image_path):
     with open(image_path, "rb") as image_file:
