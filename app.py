@@ -149,6 +149,6 @@ elif page == "AI Assistant":
             st.session_state.current_page = "AI Assistant"
 
             # Rerun to display new content immediately
-            st.experimental_rerun()
+            st.rerun()  # Refresh the page to show updated content
         except Exception as e:
             st.write(f"Error occurred: {str(e)}")
