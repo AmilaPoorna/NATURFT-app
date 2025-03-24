@@ -115,18 +115,19 @@ elif page == "AI Assistant":
     if 'conversation' not in st.session_state:
         st.session_state.conversation = []
 
-    user_query = st.text_input("Ask anything", "")
+    user_query = st.text_area("Ask anything", "", height=100, key="user_query", on_change=None)
 
-    if st.button("Submit Query") and user_query:
+    if user_query:
+        st.session_state.conversation.append({"role": "user", "content": user_query})
+
         try:
-            st.session_state.conversation.append({"role": "user", "content": user_query})
-
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 contents=user_query,
             )
 
             st.session_state.conversation.append({"role": "assistant", "content": response.text})
+            st.session_state.user_query = ""
 
         except Exception as e:
             st.write(f"Error occurred: {str(e)}")
