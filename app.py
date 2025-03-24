@@ -112,28 +112,40 @@ elif page == "AI Assistant":
 
     st.write("What can I help you with?")
 
+    # Session state to store conversation history
     if 'conversation' not in st.session_state:
         st.session_state.conversation = []
 
-    user_query = st.text_area("Ask anything", "", height=100, key="user_query", on_change=None)
+    # Create a placeholder to display conversation
+    conversation_placeholder = st.empty()
 
+    # Text input for continuous prompt entry (hit enter to submit)
+    user_query = st.text_area("Ask anything", "", height=100, key="user_query")
+
+    # Check if the user has entered something and hit Enter (text_area has 'on_change')
     if user_query:
+        # Add the user query to the conversation history
         st.session_state.conversation.append({"role": "user", "content": user_query})
 
         try:
+            # Generate response from the model
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 contents=user_query,
             )
 
+            # Add assistant response to the conversation history
             st.session_state.conversation.append({"role": "assistant", "content": response.text})
-            st.session_state.user_query = ""
+
+            # Reset the input field (effectively like pressing Enter)
+            st.session_state.user_query = ""  # reset the input field in session state
 
         except Exception as e:
             st.write(f"Error occurred: {str(e)}")
 
+    # Display the entire conversation in real-time
     for message in st.session_state.conversation:
         if message["role"] == "user":
-            st.write(f"**You**: {message['content']}")
+            conversation_placeholder.write(f"**You**: {message['content']}")
         else:
-            st.write(f"**AI Assistant**: {message['content']}")
+            conversation_placeholder.write(f"**AI Assistant**: {message['content']}")
